@@ -31,8 +31,9 @@ workspace before installing.
 |---|---|
 | A recent [Claude Code](https://code.claude.com/docs) or [Codex](https://developers.openai.com/codex/plugins/build) installation | Founder OS is a plugin, not a standalone app. |
 | Python 3.9+ | Runs the local state gateway and host hooks. |
+| A Git worktree for Codex | Packaged Codex hooks resolve the project root with Git and refuse to run outside a worktree. |
 | PyYAML *(development/tests only)* | Runs the full package validator; the installed runtime remains dependency-light. |
-| Node.js 20+ *(development/tests only)* | Runs the landing-page behavior contract test. |
+| Node.js 22.13+ *(development/tests only)* | Runs the PromptScript compiler and landing-page behavior contract test. |
 | A user scheduler *(optional)* | `launchd`, user `systemd`, or cron runs cadences. Every workflow also works manually. |
 
 Founder OS itself is free and MIT-licensed. Your existing host plan and

@@ -8,8 +8,9 @@ current business state into one source-linked decision, saves it to local
 Markdown, and produces a valid first brief in less than fifteen minutes.
 
 Start with the situation, not the catalogue: say **“I do not know what matters
-today”** or run `/situation-review`. The Chief of Staff selects one owner, one
-workflow, and the state destination. It previews that route and its missing
+today”** or run `/founder-os:situation-review` in Claude Code or
+`$founder-os:situation-review` in Codex. The Chief of Staff selects one owner,
+one workflow, and the state destination. It previews that route and its missing
 state first; the specialist starts only after you choose **Continue**, while
 **Stop** ends without running it. Founder OS never sends, pays, signs, cancels,
 or publishes; the founder remains the CEO.
@@ -38,6 +39,7 @@ Code or Codex environment and adds no account or subscription of its own.
 |---|---|
 | Recent [Claude Code](https://code.claude.com/docs) or [Codex](https://developers.openai.com/codex/plugins/build) | Founder OS is a plugin, not a standalone app. |
 | Python 3.9+ | Runs the local state gateway and host hooks. |
+| A Git worktree for Codex | Packaged Codex hooks resolve the project root with Git and refuse to run outside a worktree. |
 | PyYAML *(development only)* | Runs the full package validator; installed runtime readers remain dependency-light. |
 | A user scheduler *(optional)* | `launchd`, user `systemd`, or cron runs cadences. Manual workflows need none. |
 
@@ -158,6 +160,24 @@ from the installed plugin. Prompts and context sent through Claude Code or Codex
 remain governed by that environment's data-handling terms.
 
 ## What's inside
+
+PromptScript is the source of truth for the package. The identity, operating
+principles, restrictions, role dispatch workflow, hooks, MCP declaration, and
+examples live in `.promptscript/project.prs`; the 13 role definitions live in
+`.promptscript/agents.prs`; every skill under `.promptscript/skills/` is
+auto-discovered and compiled for the selected host. The generated files in this
+directory are adapters, not a second prompt source.
+
+The same source can target Claude Code, Codex, Factory AI, GitHub Copilot,
+Cursor, Gemini CLI, and every other target supported by PromptScript. Founder
+OS keeps the local state gateway, ownership guard, scheduler, and validator as
+runtime code because PromptScript compiles instructions and configuration; it
+does not replace enforcement code.
+
+Claude Code and Codex select separate generated hook adapters from the plugin
+manifest. The Claude adapter is `hooks/hooks.json`; Codex uses
+`hooks/codex-hooks.json` and resolves its commands through
+`CODEX_PLUGIN_ROOT`.
 
 | Content | Count |
 |---------|-------|

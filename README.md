@@ -10,7 +10,8 @@ current business state into one source-linked decision, saves it to local
 Markdown, and produces a valid first brief in less than fifteen minutes.
 
 Start with the situation, not the command list: say **“I do not know what
-matters today”** or run `/situation-review`. The Chief of Staff selects one
+matters today”** or run `/founder-os:situation-review` in Claude Code or
+`$founder-os:situation-review` in Codex. The Chief of Staff selects one
 owner, one workflow, and the state destination. It previews that route and its
 missing state first; the specialist starts only after you choose **Continue**,
 while **Stop** ends without running it. Founder OS never sends, pays, signs,
@@ -19,12 +20,12 @@ cancels, or publishes; the founder remains the CEO.
 **Local Markdown · No automatic sending · Explicit ownership · No hidden
 actions**
 
-It is a plugin for [Claude Code](https://code.claude.com/docs) and
-[Codex](https://developers.openai.com/codex/plugins/build) for a company of one
-— or a founder running several. Behind the daily decision are **13 agents, 53
-skills, 10 scheduled cadences** and one Markdown workspace per business. The
-roles own separate decisions; a local state gateway keeps their state from
-silently crossing those boundaries on either host.
+It is a plugin for [Claude Code](https://code.claude.com/docs),
+[Codex](https://developers.openai.com/codex/plugins/build), and any other
+supported agent target. Behind the daily decision are **13 agents, 53 skills,
+10 scheduled cadences** and one Markdown workspace per business. The roles own
+separate decisions; a local state gateway keeps their state from silently
+crossing those boundaries on either host.
 
 **Free and MIT-licensed.** Founder OS runs inside your existing Claude Code or
 Codex environment and adds no account or subscription of its own.
@@ -37,9 +38,43 @@ Codex environment and adds no account or subscription of its own.
 This repository is both the **plugin marketplace** (install straight from it)
 and the **source repo** (validator, tests, design docs).
 
+Codex's packaged project hooks require a Git worktree. They resolve the project
+root with Git and refuse to run from a folder outside a worktree.
+
 > Product philosophy, the org chart, and what the plugin refuses to do:
 > [`founder-os/README.md`](founder-os/README.md). This file covers how the
 > machine works and how to develop against it.
+
+## One source, every agent
+
+PromptScript is the source of truth for Founder OS instructions:
+`.promptscript/project.prs` defines the identity, operating principles,
+restrictions, workflow, hooks, MCP server, plugin capability, and examples.
+The 13 role definitions live in `.promptscript/agents.prs`. Skills under
+`.promptscript/skills/` are auto-discovered by PromptScript, including each
+Codex `agents/openai.yaml` adapter. Nothing in the package needs a second
+handwritten skill source.
+
+The same source compiles to Claude Code, Codex, Factory AI, GitHub Copilot,
+Cursor, Gemini CLI, and every other target supported by the installed
+PromptScript release. The installable `founder-os/` layout remains the Claude
+and Codex plugin adapter; the gateway, ownership guard, scheduler, validator,
+tests, and manifests stay runtime code.
+
+Install the pinned compiler and rebuild:
+
+```bash
+pnpm install
+pnpm run compile:promptscript
+pnpm run compile:promptscript:all
+```
+
+`compile:promptscript` refreshes the installable Claude and Codex plugin
+adapters.
+`compile:promptscript:all` emits target builds under
+`.promptscript/build/<target>`. Add a target profile in `promptscript.yaml`
+when another host needs a dedicated output path. Do not edit generated
+`CLAUDE.md`, agent, or skill files directly.
 
 ## Install
 
@@ -161,11 +196,13 @@ The full recovery branches are in
 
 | Piece | Where | What it does |
 |---|---|---|
-| Agents | `founder-os/agents/*.md` | 13 role definitions. Every role exposes the same bounded state-gateway tool surface and four mandated headings. |
-| Skills | `founder-os/skills/*/SKILL.md` | 53 procedures. Role skills follow `references/skill-template.md` exactly; each declares its writes in `metadata.writes`. |
+| PromptScript source | `.promptscript/` | Canonical identity, contracts, agents, and auto-discovered skills. |
+| Agents | `founder-os/agents/*.md` | 13 generated role definitions. Every role exposes the same bounded state-gateway tool surface and four mandated headings. |
+| Skills | `founder-os/skills/*/SKILL.md` | 53 generated procedures. Source lives under `.promptscript/skills/`; each declares its writes in `metadata.writes`. |
 | Ownership map | `founder-os/references/ownership.yaml` | The single source of truth: `workspace_files:` (what init scaffolds), `owns:` (one owner per file), `sections:` (the headings each file may contain). |
 | State gateway | `founder-os/mcp/` | The local `founder-os-state` stdio server. A role capability binds one role, workspace, workflow, and run; reads are bounded and writes are owner-checked, hash-guarded, structure-validated, atomic, and fail closed. |
 | Host guard | `founder-os/hooks/ownership-guard.py` | Defense in depth. Maps Claude `agent_type` or Codex `turn_id`, denies role direct-file/outbound access and unknown MCP, and permits only capability-consistent calls to the local gateway. |
+| Host hook adapters | `founder-os/hooks/hooks.json`, `founder-os/hooks/codex-hooks.json` | Separate Claude Code and Codex hook manifests selected by their plugin hosts. |
 | Validator | `scripts/validate_package.py` | 17 build-time checks (below). CI runs it on every push. |
 | Cadences | `founder-os/scripts/cadence_manager.py` | Previews, snapshots, and safely applies nine jobs per business plus one conditional portfolio job through cron, launchd, or persistent user systemd. Exact identities prevent sibling schedules from being overwritten. |
 | Local overlay | `founder-os/references/extensibility.md` | Per-business extension without a fork: `$FOUNDER_OS_HOME/_local/` may **add** a file, skill or agent and can never reassign or remove one the package ships. Merged into the guard's map per workspace; validated by `founder-os-doctor`, because a build-time validator cannot see a stranger's workspace. Forged by `/skill-forge`, whose commonest correct answer is "a packaged agent already owns this decision". |
@@ -223,13 +260,17 @@ founder-os/                       # the plugin (what gets installed)
   skills/           (53)
   mcp/                            # one eight-tool local state gateway
   scripts/cadence_manager.py      # safe scheduler preview/snapshot/apply
-  hooks/                          # hooks.json + ownership-guard.py
+  hooks/                          # Claude/Codex hooks + ownership-guard.py
   references/                     # ownership.yaml, house-rules, skill-template,
                                   # ingestion-gate, linking, multi-business
   images/                         # org chart (mermaid + png)
 scripts/validate_package.py       # build-time validator (17 checks)
 scripts/generate_commands.py      # derives COMMANDS.md from the package; CI checks it
+scripts/sync_promptscript_outputs.py # adapts Claude output and runtime hooks
 tests/                            # validator mutations + hook subprocess + registry roots
+.promptscript/                    # PromptScript source and ignored target builds
+promptscript.yaml                 # target profiles and compiler settings
+package.json                      # pinned PromptScript CLI
 CHANGELOG.md                      # what shipped in each version
 ```
 
@@ -241,6 +282,9 @@ second landing-page index.
 
 ```bash
 pip install pyyaml
+pnpm install
+pnpm run check:promptscript
+pnpm run compile:promptscript
 python3 scripts/validate_package.py founder-os   # expect: 13 agent(s), 53 skill(s), 0 error(s)
 python3 scripts/generate_commands.py founder-os  # regenerate COMMANDS.md (CI checks it)
 python3 scripts/smoke_installed_copy.py          # clean installed-copy lifecycle
@@ -249,24 +293,30 @@ node --test tests/*.behavior.test.js              # landing behavior
 python3 scripts/check_local_links.py              # docs files + anchors
 ```
 
-CI (`.github/workflows/ci.yml`) runs all six on every push and PR.
+CI (`.github/workflows/ci.yml`) compiles and validates PromptScript before the
+package's six runtime and documentation gates on every push and PR.
 
 ### Adding a skill
 
-1. Copy the shape from `references/skill-template.md` — headings are not
+1. Copy the shape from `references/skill-template.md` - headings are not
    suggestions, the validator reads the frontmatter.
-2. Declare every path you write in `metadata.writes`, spelled **verbatim** from
+2. Add or edit `.promptscript/skills/<name>/SKILL.md`. PromptScript
+   auto-discovers this directory and emits host-native skill files.
+3. Declare every path you write in `metadata.writes`, spelled **verbatim** from
    `ownership.yaml` `owns:` — and make sure the agent whose `skills[]` will
    list your skill owns those paths.
-3. New file or heading? Add it to `workspace_files:`/`owns:`/`sections:` in the
+4. New file or heading? Add it to `workspace_files:`/`owns:`/`sections:` in the
    same change — init scaffolds from the map, and a heading the map doesn't
    declare is drift the doctor will report on someone's real workspace.
-4. Write `## Beliefs`: at least 3 principles a competent generic advisor would
+5. Write `## Beliefs`: at least 3 principles a competent generic advisor would
    *not* say. The count and placement are machine-checked; the bar is held by
    review.
-5. Run the validator and the tests.
+6. Run `pnpm run compile:promptscript`, then the validator and tests.
 
 ### Adding an agent
+
+1. Update the role in `.promptscript/agents.prs`. PromptScript generates the
+   installable role file for every configured target.
 
 One agent = one decision no other agent can make — that's the test every
 existing agent had to pass. The exact role-callable `founder-os-state` allowlist,

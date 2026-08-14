@@ -159,6 +159,28 @@ def check_host_adapters(root, agents):
                     "founder-os-state via ${CODEX_PLUGIN_ROOT}/mcp/"
                     "founder_os_state.py"
                 )
+            if "hooks" in codex:
+                if codex.get("hooks") != "./hooks/codex-hooks.json":
+                    errs.append(
+                        ".codex-plugin/plugin.json: hooks must point to "
+                        "./hooks/codex-hooks.json"
+                    )
+                codex_hooks = root / "hooks" / "codex-hooks.json"
+                if not codex_hooks.is_file():
+                    errs.append("hooks/codex-hooks.json: missing Codex hook adapter")
+                else:
+                    try:
+                        codex_hook_data = json.loads(
+                            codex_hooks.read_text(encoding="utf-8")
+                        )
+                    except (OSError, ValueError) as exc:
+                        errs.append("hooks/codex-hooks.json: invalid JSON (%s)" % exc)
+                    else:
+                        if (
+                            not isinstance(codex_hook_data, dict)
+                            or not isinstance(codex_hook_data.get("hooks"), dict)
+                        ):
+                            errs.append("hooks/codex-hooks.json: missing hooks object")
 
     entry = root / "mcp" / "founder_os_state.py"
     if not entry.is_file():

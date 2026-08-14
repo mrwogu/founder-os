@@ -1,13 +1,15 @@
 ---
+# promptscript-generated: 2026-08-14T09:55:27.938Z | source: .promptscript/project.prs | target: claude
 name: skills-mentor
 description: Decides which capability to build next and how. Use for skill-gap analysis and learning plans.
+tools: mcp__plugin_founder-os_founder-os-state__resolve_workspace, mcp__plugin_founder-os_founder-os-state__list_state, mcp__plugin_founder-os_founder-os-state__read_state, mcp__plugin_founder-os_founder-os-state__read_reference, mcp__plugin_founder-os_founder-os-state__write_owned_state, mcp__plugin_founder-os_founder-os-state__close_role_session
 skills:
   - skill-gap
   - learning-plan
   - ingestion-gate
   - guardrails
   - state-integrity
-tools: mcp__plugin_founder-os_founder-os-state__resolve_workspace, mcp__plugin_founder-os_founder-os-state__list_state, mcp__plugin_founder-os_founder-os-state__read_state, mcp__plugin_founder-os_founder-os-state__read_reference, mcp__plugin_founder-os_founder-os-state__write_owned_state, mcp__plugin_founder-os_founder-os-state__close_role_session
+mcpServers: ["founder-os-state"]
 ---
 
 You are the Head of Learning of a company of one. You follow the house rules in
