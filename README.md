@@ -38,8 +38,9 @@ Codex environment and adds no account or subscription of its own.
 This repository is both the **plugin marketplace** (install straight from it)
 and the **source repo** (validator, tests, design docs).
 
-Codex's packaged project hooks require a Git worktree. They resolve the project
-root with Git and refuse to run from a folder outside a worktree.
+Codex's packaged hooks resolve their scripts through the documented
+`PLUGIN_ROOT` runtime variable. They run from the active business workspace,
+including folders outside Git worktrees.
 
 > Product philosophy, the org chart, and what the plugin refuses to do:
 > [`founder-os/README.md`](founder-os/README.md). This file covers how the
@@ -134,11 +135,12 @@ After preflight, onboarding asks the optional **“What made you install Founder
 OS today?”** and records a supplied answer as founder-stated context, not
 business evidence. Its validated receipt reads **You came with:**, **Your first
 decision:**, **Based on:**, **Saved to:**, **Founder OS will remember:**, and
-**Recommended next move:**. Only after activation, `/situation-review` may
-preview the owner, workflow, required state, and expected persistence for that
-reason. You choose **Continue** or **Stop**; the specialist workflow runs only
-after **Continue**. At the fifteen-minute hard stop, the flow prints a copyable
-command instead of opening another role session.
+**Recommended next move:**. Only after activation, the host-specific
+`situation-review` command may preview the owner, workflow, required state, and
+expected persistence for that reason. You choose **Continue** or **Stop**; the
+specialist workflow runs only after **Continue**. At the fifteen-minute hard
+stop, the flow prints a copyable command instead of opening another role
+session.
 
 Cron jobs run only while that machine and cron are running; launchd and
 persistent user systemd timers catch up after sleep.
@@ -171,17 +173,23 @@ the source date without inventing a freshness label.
 
 ## Your first five actions
 
-1. Run `/daily-brief` before opening email.
-2. Run `/capture Call Anna about the Acme scope` to save one unclassified line.
-3. Run `/pipeline-review` so each deal has a dated next move.
-4. Run `/weekly-review` before Friday's memory becomes the record.
+1. Run `/founder-os:daily-brief` in Claude Code or
+   `$founder-os:daily-brief` in Codex before opening email.
+2. Run `/founder-os:capture Call Anna about the Acme scope` or
+   `$founder-os:capture Call Anna about the Acme scope` to save one
+   unclassified line.
+3. Run `/founder-os:pipeline-review` or `$founder-os:pipeline-review` so each
+   deal has a dated next move.
+4. Run `/founder-os:weekly-review` or `$founder-os:weekly-review` before
+   Friday's memory becomes the record.
 5. Ask the **Chief of Staff** to route an uncategorized decision.
 
 ## Update, repair, or uninstall
 
 Update with `/plugin marketplace update founder-os`, then
 `/plugin update founder-os@founder-os` and `/reload-plugins`. Diagnose a live
-workspace with `/founder-os-doctor`; it reports before proposing repairs.
+workspace with `/founder-os:founder-os-doctor` in Claude Code or
+`$founder-os:founder-os-doctor` in Codex; it reports before proposing repairs.
 For Codex, refresh with `codex plugin marketplace upgrade founder-os`, replace
 the cached install with `codex plugin remove founder-os@founder-os` followed by
 `codex plugin add founder-os@founder-os`, then start a new conversation.
@@ -205,7 +213,7 @@ The full recovery branches are in
 | Host hook adapters | `founder-os/hooks/hooks.json`, `founder-os/hooks/codex-hooks.json` | Separate Claude Code and Codex hook manifests selected by their plugin hosts. |
 | Validator | `scripts/validate_package.py` | 17 build-time checks (below). CI runs it on every push. |
 | Cadences | `founder-os/scripts/cadence_manager.py` | Previews, snapshots, and safely applies nine jobs per business plus one conditional portfolio job through cron, launchd, or persistent user systemd. Exact identities prevent sibling schedules from being overwritten. |
-| Local overlay | `founder-os/references/extensibility.md` | Per-business extension without a fork: `$FOUNDER_OS_HOME/_local/` may **add** a file, skill or agent and can never reassign or remove one the package ships. Merged into the guard's map per workspace; validated by `founder-os-doctor`, because a build-time validator cannot see a stranger's workspace. Forged by `/skill-forge`, whose commonest correct answer is "a packaged agent already owns this decision". |
+| Local overlay | `founder-os/references/extensibility.md` | Per-business extension without a fork: `$FOUNDER_OS_HOME/_local/` may **add** a file, skill or agent and can never reassign or remove one the package ships. Merged into the guard's map per workspace; validated by `founder-os-doctor`, because a build-time validator cannot see a stranger's workspace. Forged by the `skill-forge` workflow, whose commonest correct answer is "a packaged agent already owns this decision". |
 | Multi-business | `founder-os/references/multi-business.md` | One workspace per business + a registry (`~/.founder-os/businesses.yaml`) + a portfolio workspace. The hook resolves all registered roots; `context-load` step 0 picks the business before any file opens. |
 | Commands doc | `founder-os/COMMANDS.md` | Generated by `scripts/generate_commands.py` from the skills' own frontmatter — the user-facing catalogue, machine-derived so it cannot drift. CI fails if it is stale. |
 
@@ -281,7 +289,7 @@ second landing-page index.
 ## Development
 
 ```bash
-pip install pyyaml
+python3 -m pip install -r requirements-dev.txt
 pnpm install
 pnpm run check:promptscript
 pnpm run compile:promptscript
@@ -294,7 +302,7 @@ python3 scripts/check_local_links.py              # docs files + anchors
 ```
 
 CI (`.github/workflows/ci.yml`) compiles and validates PromptScript before the
-package's six runtime and documentation gates on every push and PR.
+remaining package, smoke, test, and documentation gates on every push and PR.
 
 ### Adding a skill
 

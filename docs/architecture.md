@@ -138,6 +138,9 @@ Each `agents/<slug>.md` is a Markdown file with YAML frontmatter and a body.
   close. `portfolio-manager` alone adds `read_portfolio_inputs`; no role can
   mint its own session. No direct file, shell, web, external MCP, or
   nested-agent tool appears in a role allowlist.
+- The installable Claude adapter injects Claude's plugin-scoped spellings for
+  that allowlist. Portable PromptScript role data does not leak those
+  host-specific names into Factory or GitHub agent output.
 - **Body**: four mandated headings in order — `## What triggers you`,
   `## What you do`, `## What you produce`, `## Who you hand off to`. The
   validator enforces their presence and order.
@@ -301,8 +304,8 @@ The same package runs under Claude Code and Codex:
 - **Codex** reads `.codex-plugin/plugin.json` (which points `skills` at
   `./skills/`) and, per skill, `skills/<name>/agents/openai.yaml` — a small
   interface file (`display_name`, `short_description`, `default_prompt`). Its
-  inline `mcpServers` entry points at the same gateway with
-  `${CODEX_PLUGIN_ROOT}`.
+  inline `mcpServers` entry runs the same gateway from plugin-root `cwd` with a
+  relative script path.
 - The `SessionStart` and guard hooks are written to handle both: Claude supplies
   `agent_type` on tool calls directly; Codex supplies `turn_id`, resolved through
   the `record-agent.py` mapping. `AGENTS.md` at the repo root points Codex at

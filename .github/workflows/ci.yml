@@ -22,7 +22,8 @@ jobs:
         run: |
           pnpm \
             install --frozen-lockfile
-      - run: pip install pyyaml
+      - name: Install Python development dependencies
+        run: python3 -m pip install -r requirements-dev.txt
       - name: Check PromptScript source and generated outputs
         run: pnpm run check:promptscript
       - name: Validate the package

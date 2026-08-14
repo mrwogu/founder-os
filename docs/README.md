@@ -25,8 +25,8 @@ in the package itself, these pages point at it rather than copy it — a second
 copy of a map goes stale silently, which is the exact failure the package is
 built to prevent.
 
-Codex's packaged project hooks require a Git worktree. They resolve the project
-root with Git and refuse to run from a folder outside a worktree.
+Codex's packaged hooks use the documented `PLUGIN_ROOT` runtime variable and
+work from business folders both inside and outside Git worktrees.
 
 ## Start here
 

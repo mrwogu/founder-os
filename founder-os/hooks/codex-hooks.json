@@ -2,15 +2,15 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "PROMPTSCRIPT_PROJECT_ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\" || { printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1; }; case \"$PROMPTSCRIPT_PROJECT_ROOT\" in *[![:space:]]*) ;; *) printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1 ;; esac; cd \"$PROMPTSCRIPT_PROJECT_ROOT\" && python3 \"${CODEX_PLUGIN_ROOT}/hooks/session-context.py\" # promptscript-generated:session-context",
-            "commandWindows": "$promptscriptProjectRoot = git rev-parse --show-toplevel 2>$null; if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($promptscriptProjectRoot)) { [Console]::Error.WriteLine('PromptScript codex hook requires a Git worktree project root.'); exit 1 }; Set-Location -LiteralPath $promptscriptProjectRoot -ErrorAction Stop; & 'python3' (Join-Path $env:CODEX_PLUGIN_ROOT 'hooks/session-context.py') # promptscript-generated:session-context",
+            "command": "python3 \"${PLUGIN_ROOT}/hooks/session-context.py\" # promptscript-generated:session-context",
+            "commandWindows": "& 'python' (Join-Path $env:PLUGIN_ROOT 'hooks/session-context.py') # promptscript-generated:session-context",
             "statusMessage": "Loading Founder OS context"
           }
-        ]
+        ],
+        "matcher": "startup|resume|clear|compact"
       }
     ],
     "SubagentStart": [
@@ -18,8 +18,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "PROMPTSCRIPT_PROJECT_ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\" || { printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1; }; case \"$PROMPTSCRIPT_PROJECT_ROOT\" in *[![:space:]]*) ;; *) printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1 ;; esac; cd \"$PROMPTSCRIPT_PROJECT_ROOT\" && python3 \"${CODEX_PLUGIN_ROOT}/hooks/record-agent.py\" # promptscript-generated:record-agent",
-            "commandWindows": "$promptscriptProjectRoot = git rev-parse --show-toplevel 2>$null; if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($promptscriptProjectRoot)) { [Console]::Error.WriteLine('PromptScript codex hook requires a Git worktree project root.'); exit 1 }; Set-Location -LiteralPath $promptscriptProjectRoot -ErrorAction Stop; & 'python3' (Join-Path $env:CODEX_PLUGIN_ROOT 'hooks/record-agent.py') # promptscript-generated:record-agent",
+            "command": "python3 \"${PLUGIN_ROOT}/hooks/record-agent.py\" # promptscript-generated:record-agent",
+            "commandWindows": "& 'python' (Join-Path $env:PLUGIN_ROOT 'hooks/record-agent.py') # promptscript-generated:record-agent",
             "statusMessage": "Recording Founder OS decision role"
           }
         ]
@@ -27,15 +27,15 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "^(Read|Write|Edit|NotebookEdit|Glob|Grep|Bash|WebFetch|WebSearch|apply_patch|Task|Agent|mcp__.*)$",
         "hooks": [
           {
             "type": "command",
-            "command": "PROMPTSCRIPT_PROJECT_ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\" || { printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1; }; case \"$PROMPTSCRIPT_PROJECT_ROOT\" in *[![:space:]]*) ;; *) printf '%s\\n' 'PromptScript codex hook requires a Git worktree project root.' >&2; exit 1 ;; esac; cd \"$PROMPTSCRIPT_PROJECT_ROOT\" && python3 \"${CODEX_PLUGIN_ROOT}/hooks/ownership-guard.py\" # promptscript-generated:ownership-guard",
-            "commandWindows": "$promptscriptProjectRoot = git rev-parse --show-toplevel 2>$null; if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($promptscriptProjectRoot)) { [Console]::Error.WriteLine('PromptScript codex hook requires a Git worktree project root.'); exit 1 }; Set-Location -LiteralPath $promptscriptProjectRoot -ErrorAction Stop; & 'python3' (Join-Path $env:CODEX_PLUGIN_ROOT 'hooks/ownership-guard.py') # promptscript-generated:ownership-guard",
+            "command": "python3 \"${PLUGIN_ROOT}/hooks/ownership-guard.py\" # promptscript-generated:ownership-guard",
+            "commandWindows": "& 'python' (Join-Path $env:PLUGIN_ROOT 'hooks/ownership-guard.py') # promptscript-generated:ownership-guard",
             "statusMessage": "Checking Founder OS boundaries"
           }
-        ]
+        ],
+        "matcher": "^(Read|Write|Edit|NotebookEdit|Glob|Grep|Bash|WebFetch|WebSearch|apply_patch|Task|Agent|mcp__.*)$"
       }
     ]
   }

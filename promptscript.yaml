@@ -8,13 +8,6 @@ input:
     - .promptscript/**/*.prs
     - .promptscript/skills/**/SKILL.md
     - .promptscript/skills/**/agents/openai.yaml
-output:
-  baseDir: .promptscript/build/claude
-  overwrite: true
-targets:
-  - claude:
-      version: full
-      skillBaseDir: skills
 builds:
   claude:
     entry: .promptscript/project.prs
@@ -30,7 +23,6 @@ builds:
       - codex:
           version: full
           skillBaseDir: skills
-          agentsFrontmatter: experimental
   factory:
     entry: .promptscript/project.prs
     output: .promptscript/build/factory

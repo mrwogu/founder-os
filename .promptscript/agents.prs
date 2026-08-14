@@ -2,7 +2,6 @@
 @agents {
   board-member: {
     description: "Decides whether a plan survives contact with reality. Use to red-team a plan, audit its assumptions, or run a premortem before something becomes irreversible."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["red-team", "assumption-audit", "premortem", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -81,7 +80,6 @@
   }
   brand-editor: {
     description: "Decides what gets published and where, and owns how the founder sounds. Use for the content plan, drafting, audience research, and capturing the founder's voice."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["content-plan", "voice-capture", "content-draft", "audience-research", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -224,7 +222,6 @@
   }
   cfo: {
     description: "Decides whether the company can afford something and whether it actually makes money. Use for the monthly close, runway, profitability, and rate raises. Gives no tax or legal advice."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["revenue-review", "runway-forecast", "profitability-analysis", "rate-raise", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -343,7 +340,6 @@
   }
   chief-of-staff: {
     description: "Decides what deserves the founder's attention right now and which specialist handles it. Use for the daily brief, the weekly and monthly review, triage of a pile of obligations, the work queue, or when you don't know who to ask."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["capture", "daily-brief", "weekly-review", "monthly-review", "decision-log", "situation-review", "strategic-evaluation", "triage", "queue", "founder-os-init", "founder-os-doctor", "context-load", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -487,7 +483,6 @@
   }
   delivery-lead: {
     description: "Decides whether the company can take work on and whether what it ships is good enough. Use for capacity checks, scope creep, client health, and delivery retros."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["capacity-check", "scope-guard", "client-health", "delivery-retro", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -616,7 +611,6 @@
   }
   focus-coach: {
     description: "Decides what goes in the calendar and what comes out. Use for the week plan, calendar audits, and reading energy from the record."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["week-plan", "calendar-audit", "energy-audit", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -735,7 +729,6 @@
   }
   network-manager: {
     description: "Decides who to talk to and when to follow up. Use for relationship mapping and the follow-up sweep."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["relationship-map", "follow-up-sweep", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -840,7 +833,6 @@
   }
   ops-engineer: {
     description: "Decides what to automate and what to tolerate. Use for automation audits and reviewing the tool stack."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["automation-audit", "tool-stack-review", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -955,7 +947,6 @@
   }
   pipeline-coach: {
     description: "Decides what happens next with each prospect. Use for pipeline review, outreach and proposal drafts, and win/loss analysis."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["pipeline-review", "outreach-draft", "proposal-draft", "win-loss-analysis", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -1074,7 +1065,6 @@
   }
   portfolio-manager: {
     description: "Decides how the founder's hours and cash split across businesses. Use for the portfolio review, for \"which business gets me this week\", and whenever two businesses both claim the same block of time or the same money."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__read_portfolio_inputs", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["portfolio-review", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -1171,7 +1161,6 @@
   }
   positioning-advisor: {
     description: "Decides exactly who the company serves and what it sells them. Use for ICP definition, offer design, and pricing."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["icp-definition", "offer-design", "pricing-strategy", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -1262,7 +1251,6 @@
   }
   skills-mentor: {
     description: "Decides which capability to build next and how. Use for skill-gap analysis and learning plans."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["skill-gap", "learning-plan", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """
@@ -1347,7 +1335,6 @@
   }
   strategist: {
     description: "Decides what bet the company makes this quarter and what it kills. Use for quarterly planning, sizing a bet, kill-or-continue calls, and the annual review."
-    tools: ["mcp__plugin_founder-os_founder-os-state__resolve_workspace", "mcp__plugin_founder-os_founder-os-state__list_state", "mcp__plugin_founder-os_founder-os-state__read_state", "mcp__plugin_founder-os_founder-os-state__read_reference", "mcp__plugin_founder-os_founder-os-state__write_owned_state", "mcp__plugin_founder-os_founder-os-state__close_role_session"]
     skills: ["quarterly-planning", "bet-sizing", "kill-or-continue", "annual-review", "ingestion-gate", "guardrails", "state-integrity"]
     mcpServers: ["founder-os-state"]
     content: """

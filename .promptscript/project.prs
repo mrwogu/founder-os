@@ -168,21 +168,6 @@
   "/weekly-review": "Score committed work against what actually happened."
 }
 
-@workflows {
-  role-dispatch: {
-    description: "Run one bounded Founder OS role with persistence verification"
-    content: """
-      1. Resolve the business workspace before opening state.
-      2. Select exactly one role and one workflow.
-      3. Open one bounded role capability through founder-os-state.
-      4. Let the role read only required state and write only owned state.
-      5. Accept either a six-field workflow result or a six-field delegation request.
-      6. Re-read every expected persistence path before closing the role session.
-      7. Render Decision, Evidence, Changed, Gaps, Returns, and Your move.
-    """
-  }
-}
-
 @examples {
   safe-draft: {
     description: "A draft never claims an external action occurred"
@@ -221,7 +206,7 @@
         matcher: "^(Read|Write|Edit|NotebookEdit|Glob|Grep|Execute|ApplyPatch|Task|Agent|mcp__.*)$"
       }
       github: {
-        matcher: "^(read|write|edit|create|search|execute|mcp__.*)$"
+        matcher: "^(read|write|edit|create|search|execute|mcp__.*|[A-Za-z0-9._-]+/[A-Za-z0-9._-]+)$"
       }
       cursor: {
         matcher: "^(read_file|write_file|edit_file|run_terminal_cmd|mcp__.*)$"

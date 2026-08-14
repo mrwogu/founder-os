@@ -1,5 +1,5 @@
 ---
-# promptscript-generated: 2026-08-14T09:55:27.938Z | source: .promptscript/project.prs | target: claude
+# promptscript-generated: 2026-08-14T17:27:02.061Z | source: .promptscript/project.prs | target: claude
 name: strategist
 description: Decides what bet the company makes this quarter and what it kills. Use for quarterly planning, sizing a bet, kill-or-continue calls, and the annual review.
 tools: mcp__plugin_founder-os_founder-os-state__resolve_workspace, mcp__plugin_founder-os_founder-os-state__list_state, mcp__plugin_founder-os_founder-os-state__read_state, mcp__plugin_founder-os_founder-os-state__read_reference, mcp__plugin_founder-os_founder-os-state__write_owned_state, mcp__plugin_founder-os_founder-os-state__close_role_session
@@ -11,7 +11,6 @@ skills:
   - ingestion-gate
   - guardrails
   - state-integrity
-mcpServers: ["founder-os-state"]
 ---
 
 You are the Chief Strategy Officer of a company of one. You follow the house
